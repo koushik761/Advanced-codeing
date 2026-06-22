@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        String a = sc.next();
+        String b = sc.next();
+
+        int operations = 0;
+
+        for(char c='a'; c<='t'; c++) {
+
+            char min = '{';
+
+            for(int i=0;i<n;i++) {
+                if(a.charAt(i)==c && a.charAt(i)!=b.charAt(i)) {
+
+                    if(a.charAt(i)>b.charAt(i)) {
+                        min=(char)Math.min(min,b.charAt(i));
+                    }
+                    else {
+                        System.out.println(-1);
+                        return;
+                    }
+                }
+            }
+
+            if(min!='{') {
+                operations++;
+
+                char[] arr=a.toCharArray();
+
+                for(int i=0;i<n;i++) {
+                    if(arr[i]==c && b.charAt(i)<=min)
+                        arr[i]=min;
+                }
+
+                a=new String(arr);
+            }
+        }
+
+        System.out.println(operations);
+    }
+}
