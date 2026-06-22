@@ -1,0 +1,66 @@
+import java.util.*;
+
+public class Main {
+
+    static long kadanePrefix(long[] arr, long[] left) {
+        int n = arr.length;
+
+        long curr = arr[0];
+        long best = arr[0];
+        left[0] = best;
+
+        for (int i = 1; i < n; i++) {
+            curr = Math.max(arr[i], curr + arr[i]);
+            best = Math.max(best, curr);
+            left[i] = best;
+        }
+        return best;
+    }
+
+    static void kadaneSuffix(long[] arr, long[] right) {
+        int n = arr.length;
+
+        long curr = arr[n - 1];
+        long best = arr[n - 1];
+        right[n - 1] = best;
+
+        for (int i = n - 2; i >= 0; i--) {
+            curr = Math.max(arr[i], curr + arr[i]);
+            best = Math.max(best, curr);
+            right[i] = best;
+        }
+    }
+
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        int n = sc.nextInt();
+        int k = sc.nextInt();
+
+        long[] arr = new long[n];
+
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextLong();
+        }
+
+        long[] left = new long[n];
+        long[] right = new long[n];
+
+        kadanePrefix(arr, left);
+        kadaneSuffix(arr, right);
+
+        long ans = Long.MIN_VALUE;
+
+        for (int i = 0; i < n; i++) {
+
+            int secondStart = i + k + 2;
+
+            if (secondStart < n) {
+                ans = Math.max(ans, left[i] + right[secondStart]);
+            }
+        }
+
+        System.out.println(ans);
+    }
+}
