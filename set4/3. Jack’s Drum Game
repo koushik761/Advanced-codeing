@@ -1,0 +1,52 @@
+import java.util.*;
+
+public class Main {
+
+    static long gcd(long a,long b){
+        while(b!=0){
+            long t=b;
+            b=a%b;
+            a=t;
+        }
+        return a;
+    }
+
+    static long lcm(long a,long b){
+        return (a/gcd(a,b))*b;
+    }
+
+    public static void main(String[] args){
+
+        Scanner sc=new Scanner(System.in);
+
+        int n=sc.nextInt();
+
+        int[] p=new int[n];
+
+        for(int i=0;i<n;i++)
+            p[i]=sc.nextInt()-1;
+
+        boolean[] vis=new boolean[n];
+
+        long ans=1;
+
+        for(int i=0;i<n;i++){
+
+            if(!vis[i]){
+
+                int len=0;
+                int cur=i;
+
+                while(!vis[cur]){
+                    vis[cur]=true;
+                    cur=p[cur];
+                    len++;
+                }
+
+                ans=lcm(ans,len);
+            }
+        }
+
+        System.out.println(ans);
+    }
+}
